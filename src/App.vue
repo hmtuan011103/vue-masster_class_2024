@@ -2,5 +2,7 @@
 </script>
 
 <template>
-  <h1>Welcome to VueJs!</h1>
+  <main>
+    <RouterView />
+  </main>
 </template>
