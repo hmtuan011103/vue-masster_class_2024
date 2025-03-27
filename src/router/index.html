@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bản ghi mới được tạo</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1E1E1E;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .content {
+            font-size: 16px;
+            color: #d1d5db;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 0;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+        }
+        .div-btn {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <p class="title">Một kỷ niệm mới đã được tạo 🎉</p>
+    <p class="content">Tiêu đề: <strong>{{ $record->title ?? 'Không có tiêu đề' }}</strong></p>
+    <p class="content">Hãy nhấn vào nút bên dưới để xem chi tiết kỷ niệm này.</p>
+    <div class="div-btn">
+        <a class="btn" href="{{'https://memoryth.online/love/hen-ho'}}"><p>Xem kỷ niệm</p></a>
+    </div>
+    <p class="footer">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi ♥️</p>
+</div>
+</body>
+</html>
