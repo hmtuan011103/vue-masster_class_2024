@@ -50,7 +50,6 @@ const table = useVueTable({
               <slot :name="`cell-${cell.column.id}`" :cell="cell">
                 {{ cell.getValue() }}
               </slot>
-              <!-- <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" /> -->
             </TableCell>
           </TableRow>
         </template>
