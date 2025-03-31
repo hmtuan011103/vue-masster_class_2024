@@ -7,7 +7,12 @@ import { RouterLink } from 'vue-router';
 const tasks = ref<Tables<'tasks'>[] | null>(null);
 
 const getTasks = async () => {
-  const { data, error } = await supabase.from('tasks').select();
+  const { data, error } = await supabase.from('tasks').select(`
+    *,
+    projects (
+      id, name, slug
+    )
+  `);
 
   if (error) console.log(error);
 
@@ -19,26 +24,26 @@ await getTasks()
 usePageStore().pageData.title = 'My Tasks'
 
 const columns: ColumnDef<Tables<'tasks'>>[] = [
-    {
-        accessorKey: 'name',
-        header: () => h('div', { class: 'text-left' }, 'Name'),
-    },
-    {
-        accessorKey: 'status',
-        header: () => h('div', { class: 'text-left' }, 'Status'),
-    },
-    {
-        accessorKey: 'due_date',
-        header: () => h('div', { class: 'text-left' }, 'Due Date'),
-    },
-    {
-        accessorKey: 'project_id',
-        header: () => h('div', { class: 'text-left' }, 'Project'),
-    },
-    {
-        accessorKey: 'collaborators',
-        header: () => h('div', { class: 'text-left' }, 'Collaborators'),
-    }
+  {
+    accessorKey: 'name',
+    header: () => h('div', { class: 'text-left' }, 'Name'),
+  },
+  {
+    accessorKey: 'status',
+    header: () => h('div', { class: 'text-left' }, 'Status'),
+  },
+  {
+    accessorKey: 'due_date',
+    header: () => h('div', { class: 'text-left' }, 'Due Date'),
+  },
+  {
+    accessorKey: 'projects',
+    header: () => h('div', { class: 'text-left' }, 'Project'),
+  },
+  {
+    accessorKey: 'collaborators',
+    header: () => h('div', { class: 'text-left' }, 'Collaborators'),
+  }
 ]
 </script>
 
@@ -47,6 +52,11 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
         <template #cell-name="{ cell }">
             <RouterLink :to="`/tasks/${cell.row.original.id}`">
                 {{ cell.getValue() }}
+            </RouterLink>
+        </template>
+        <template #cell-projects="{ cell }">
+            <RouterLink :to="`/projects/${cell.row.original.projects.slug}`">
+                {{ cell.getValue().name }}
             </RouterLink>
         </template>
     </DataTable>
