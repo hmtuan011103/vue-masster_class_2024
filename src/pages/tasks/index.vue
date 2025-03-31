@@ -16,6 +16,8 @@ const getTasks = async () => {
 
 await getTasks()
 
+usePageStore().pageData.title = 'My Tasks'
+
 const columns: ColumnDef<Tables<'tasks'>>[] = [
     {
         accessorKey: 'name',

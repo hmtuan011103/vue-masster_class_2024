@@ -16,6 +16,8 @@ const getProrjects = async () => {
 
 await getProrjects()
 
+usePageStore().pageData.title = 'Projects'
+
 const columns: ColumnDef<Tables<'projects'>>[] = [
     {
         accessorKey: 'name',
