@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import VueRouter from 'unplugin-vue-router/vite'
+import AutoImport from 'unplugin-auto-import/vite'
 
 import autoprefixer from 'autoprefixer'
 import tailwind from 'tailwindcss'
@@ -15,11 +16,23 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (element) => element.startsWith('iconify-icon')
-        }
-      }
+          isCustomElement: (element) => element.startsWith('iconify-icon'),
+        },
+      },
     }),
     vueDevTools(),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.vue\.[tj]sx?\?vue/, // .vue (vue-loader with experimentalInlineMatchResource enabled)
+        /\.md$/, // .md
+      ],
+      imports: ['vue', 'vue-router'],
+      dts: true,
+      viteOptimizeDeps: true,
+    }),
   ],
   css: {
     postcss: {
@@ -28,7 +41,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
