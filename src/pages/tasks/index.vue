@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient';
-import type { Tables } from '../../../database.types';
-import type { ColumnDef } from '@tanstack/vue-table';
 import { RouterLink } from 'vue-router';
+import { columns } from '@/utils/tableColumns/tasksColumns';
+import { tasksWithProjectsQuery, type TasksWithProjects } from '@/utils/supaQueries';
 
-const tasks = ref<Tables<'tasks'>[] | null>(null);
+usePageStore().pageData.title = 'My Tasks'
+
+const tasks = ref<TasksWithProjects | null>(null);
 
 const getTasks = async () => {
-  const { data, error } = await supabase.from('tasks').select(`
-    *,
-    projects (
-      id, name, slug
-    )
-  `);
+  const { data, error } = await tasksWithProjectsQuery
 
   if (error) console.log(error);
 
@@ -21,30 +17,6 @@ const getTasks = async () => {
 
 await getTasks()
 
-usePageStore().pageData.title = 'My Tasks'
-
-const columns: ColumnDef<Tables<'tasks'>>[] = [
-  {
-    accessorKey: 'name',
-    header: () => h('div', { class: 'text-left' }, 'Name'),
-  },
-  {
-    accessorKey: 'status',
-    header: () => h('div', { class: 'text-left' }, 'Status'),
-  },
-  {
-    accessorKey: 'due_date',
-    header: () => h('div', { class: 'text-left' }, 'Due Date'),
-  },
-  {
-    accessorKey: 'projects',
-    header: () => h('div', { class: 'text-left' }, 'Project'),
-  },
-  {
-    accessorKey: 'collaborators',
-    header: () => h('div', { class: 'text-left' }, 'Collaborators'),
-  }
-]
 </script>
 
 <template>
@@ -55,8 +27,8 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
             </RouterLink>
         </template>
         <template #cell-projects="{ cell }">
-            <RouterLink :to="`/projects/${cell.row.original.projects.slug}`">
-                {{ cell.getValue().name }}
+            <RouterLink :to="`/projects/${cell.row.original.projects?.slug}`">
+                {{ cell.row.original.projects?.name }}
             </RouterLink>
         </template>
     </DataTable>
