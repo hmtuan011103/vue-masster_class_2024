@@ -22,7 +22,7 @@ usePageStore().pageData.title = 'Projects'
 <template>
     <DataTable v-if="projects" :columns="columns" :data="projects">
         <template #cell-name="{ cell }">
-            <RouterLink :to="`/projects/${cell.row.original?.slug}`">
+            <RouterLink :to="`/projects/${cell.row.original.slug}`">
                 {{ cell.getValue() }}
             </RouterLink>
         </template>
