@@ -2,21 +2,21 @@
 import { RouterLink } from 'vue-router';
 import { columns } from '@/utils/tableColumns/tasksColumns';
 import { tasksWithProjectsQuery, type TasksWithProjects } from '@/utils/supaQueries';
+import { useErrorStore } from '@/stores/error';
 
 usePageStore().pageData.title = 'My Tasks'
 
 const tasks = ref<TasksWithProjects | null>(null);
 
 const getTasks = async () => {
-  const { data, error } = await tasksWithProjectsQuery
+  const { data, error, status } = await tasksWithProjectsQuery
 
-  if (error) console.log(error);
+  if (error) useErrorStore().setError({ error, customCode: status });
 
   tasks.value = data;
 }
 
 await getTasks()
-
 </script>
 
 <template>

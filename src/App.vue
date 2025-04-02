@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { useErrorStore } from './stores/error';
 
+const errorStore = useErrorStore()
+
 const { activeError } = storeToRefs(useErrorStore())
+
+onErrorCaptured((error) => {
+  errorStore.setError({ error })
+})
 </script>
 
 <template>

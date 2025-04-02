@@ -17,14 +17,11 @@ export const projectQuery = (slug: string) =>
     .from('projects')
     .select(
       `
-    *,
-    tasks (
-      id,
-      name,
-      status,
-      due_date
-    )
-  `,
+        *,
+        tasks (
+          id, name, status, due_date
+        )
+      `,
     )
     .eq('slug', slug)
     .single()
@@ -35,13 +32,11 @@ export const taskQuery = (id: string) => {
     .from('tasks')
     .select(
       `
-    *,
-    projects (
-      id,
-      name,
-      slug
-    )
-  `,
+        *,
+        projects (
+          id, name, slug
+        )
+      `,
     )
     .eq('id', id)
     .single()
