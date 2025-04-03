@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { supabase } from './lib/supabaseClient';
-import { useAuthStore } from './stores/auth';
 import { useErrorStore } from './stores/error';
 
 const errorStore = useErrorStore()
-const authStore = useAuthStore()
 
 const { activeError } = storeToRefs(useErrorStore())
 
@@ -12,10 +9,7 @@ onErrorCaptured((error) => {
   errorStore.setError({ error })
 })
 
-onMounted(async () => {
-  const { data } = await supabase.auth.getSession()
-  if (data.session?.user) await authStore.setAuth(data.session)
-})
+onMounted(async () => {})
 </script>
 
 <template>
